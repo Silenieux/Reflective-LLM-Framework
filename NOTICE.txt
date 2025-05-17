@@ -1,0 +1,6 @@
+NOTICE
+
+This project and its included files were created by Mark Finch using AI-assisted design (OpenAI's ChatGPT, Qwen-3B, LM Studio) and traditional development tools.
+
+All rights to original contributions remain with the author.  
+Use is governed by the attached Creative Commons BY-NC-SA 4.0 license.
