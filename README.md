@@ -38,7 +38,12 @@ This work was created by **Mark Finch**, using both human-led design and AI assi
 If you share or build upon it, please maintain this notice.
 
 ---
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15448079.svg)](https://doi.org/10.5281/zenodo.15448079)
 
+📌 Citable DOI: [10.5281/zenodo.15448079](https://doi.org/10.5281/zenodo.15448079)
+
+This project has been archived and published via Zenodo to preserve its structure, authorship, and symbolic AI scaffold for ethical retail applications.
+---
 ## 💬 Contact
 
 If you have questions, feedback, or collaboration ideas, feel free to reach out via GitHub (coming soon).
