@@ -1,6 +1,6 @@
 {
   "title": "Symbolic Continuity Framework for High-Friction Retail Environments",
-  "version": "1.0-draft",
+  "version": "1.05-draft",
   "purpose": "This framework adapts the Recursive Coexistence Protocol (RCP \u2014 a system that allows AI to reflect on previous decisions, rather than just respond), a lightweight structure that guides AI systems to simulate human-like reflection and decision continuity, to support fast-paced, high-friction environments.",
   "applicability": {
     "sectors": [
