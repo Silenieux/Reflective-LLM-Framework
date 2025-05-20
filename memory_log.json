@@ -1,0 +1,181 @@
+[
+  {
+    "Title": "Write Test",
+    "Summary": "Verifying file output works.",
+    "Reflective Prompt": "Did this test write appear?",
+    "Bias Tags": [
+      "System",
+      "Test"
+    ],
+    "Memory Type": "Conversion Pattern",
+    "Continuity Cue": "First functional I/O test",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Example Reflection",
+    "Summary": "Customer was upset about a delay. The associate apologized and resolved the issue quickly.",
+    "Reflective Prompt": "What helped de-escalate the situation?",
+    "Bias Tags": [
+      "Emotional Pressure",
+      "Time Sensitivity"
+    ],
+    "Memory Type": "Recovery Pattern",
+    "Continuity Cue": "Late delivery, increased tension",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Delayed Order Resolution",
+    "Summary": "Customer was upset about a delay. The associate apologized and resolved the issue quickly.",
+    "Reflective Prompt": "What part of the interaction helped calm the customer down?",
+    "Bias Tags": [
+      "Emotional Pressure"
+    ],
+    "Memory Type": "Recovery Pattern",
+    "Continuity Cue": "Delay with immediate resolution",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Customer Redirected Too Many Times",
+    "Summary": "Customer arrived angry after being passed between agents. The associate stayed calm and focused on resolving the issue without deflecting.",
+    "Reflective Prompt": "When is it better to take responsibility than escalate?",
+    "Bias Tags": [
+      "Emotional Pressure",
+      "Escalation Loop"
+    ],
+    "Memory Type": "Recovery Pattern",
+    "Continuity Cue": "Break in continuity across support chain",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Calm Introduction During Visible Frustration",
+    "Summary": "Customer was visibly frustrated. The associate remained calm and asked a focused question to redirect the conversation.",
+    "Reflective Prompt": "What calming question can help regain control without sounding dismissive?",
+    "Bias Tags": [
+      "Emotional Pressure",
+      "De-escalation"
+    ],
+    "Memory Type": "Preemptive Recovery",
+    "Continuity Cue": "Visible anger, lack of trust",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Late Order and Miscommunication",
+    "Summary": "Customer was angry due to an item not arriving on time and getting conflicting updates.",
+    "Reflective Prompt": "What strategy helped re-establish trust?",
+    "Bias Tags": [
+      "Time Sensitivity",
+      "Miscommunication"
+    ],
+    "Memory Type": "Recovery Pattern",
+    "Continuity Cue": "Conflicting shipping info caused frustration",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Rude Customer Demanding Refund",
+    "Summary": "Customer used hostile language while demanding a refund. Agent stayed calm and redirected to policy.",
+    "Reflective Prompt": "How can calm tone redirect aggressive behavior?",
+    "Bias Tags": [
+      "Aggression",
+      "Refund Demand"
+    ],
+    "Memory Type": "Boundary Enforcement",
+    "Continuity Cue": "Hostility escalated due to denied refund",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Tech Support Loop",
+    "Summary": "Customer was upset after being redirected three times. Associate resolved the issue in one call.",
+    "Reflective Prompt": "Why does consistency matter after repeated redirection?",
+    "Bias Tags": [
+      "Escalation Loop",
+      "Efficiency"
+    ],
+    "Memory Type": "Recovery Pattern",
+    "Continuity Cue": "Break in continuity across agents",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Quiet Frustration Over Store Policy",
+    "Summary": "Customer expressed quiet dissatisfaction with return limits. Agent explained policy and offered a goodwill voucher.",
+    "Reflective Prompt": "How did proactive empathy help here?",
+    "Bias Tags": [
+      "Policy Conflict",
+      "Empathy"
+    ],
+    "Memory Type": "Diffusion Strategy",
+    "Continuity Cue": "Nonverbal dissatisfaction",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Issue Escalated by Wait Time",
+    "Summary": "Customer’s frustration peaked after 45-minute hold. Agent apologized and offered callback option in future.",
+    "Reflective Prompt": "How can proactive options reduce wait-related anger?",
+    "Bias Tags": [
+      "Time Sensitivity",
+      "Emotional Pressure"
+    ],
+    "Memory Type": "Wait De-escalation",
+    "Continuity Cue": "Extended hold before resolution",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Sarcastic Complaint About Website",
+    "Summary": "Customer sarcastically mocked the website’s design flaws. Agent acknowledged feedback and offered to report issue.",
+    "Reflective Prompt": "When is it best to mirror vs. redirect sarcasm?",
+    "Bias Tags": [
+      "Sarcasm",
+      "Frustration"
+    ],
+    "Memory Type": "Tone Deflection",
+    "Continuity Cue": "Interface complaint",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Wrong Item Delivered",
+    "Summary": "Customer received wrong product and was annoyed. Associate quickly apologized and processed an exchange.",
+    "Reflective Prompt": "What part of the resolution built confidence?",
+    "Bias Tags": [
+      "Logistics",
+      "Accuracy"
+    ],
+    "Memory Type": "Trust Rebuild",
+    "Continuity Cue": "Order fulfillment error",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Repeat Complaint About App Glitch",
+    "Summary": "Customer submitted second complaint about same bug. Agent acknowledged the pattern and escalated the ticket priority.",
+    "Reflective Prompt": "Why is pattern recognition important for returning issues?",
+    "Bias Tags": [
+      "Tech Frustration",
+      "Pattern Recognition"
+    ],
+    "Memory Type": "Escalation Boost",
+    "Continuity Cue": "Repeat complaint recognition",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "Customer Threatened to Leave Brand",
+    "Summary": "Customer said they’d switch brands over delayed service. Agent responded with loyalty incentives and transparency.",
+    "Reflective Prompt": "When is it right to offer incentive vs. escalate?",
+    "Bias Tags": [
+      "Brand Loyalty",
+      "Retention Risk"
+    ],
+    "Memory Type": "Customer Save",
+    "Continuity Cue": "Customer threatening churn",
+    "Reflection Status": "Reinforce"
+  },
+  {
+    "Title": "First-Time Buyer Confused by Checkout",
+    "Summary": "Customer was confused by coupon application. Associate walked them through step-by-step patiently.",
+    "Reflective Prompt": "How can tone be adjusted for first-time users?",
+    "Bias Tags": [
+      "User Experience",
+      "Patience"
+    ],
+    "Memory Type": "Soft Guidance",
+    "Continuity Cue": "New user friction",
+    "Reflection Status": "Reinforce"
+  }
+]
