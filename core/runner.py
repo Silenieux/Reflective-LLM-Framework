@@ -1,30 +1,61 @@
 
+import sys
 import os
-from sentence_transformers import SentenceTransformer
-from core.memory_loader import load_memory
-from core.vector_search import build_index, search_memory
-from core.llama_wrapper import generate_response
-from modules.atomic.format_context import format_context
 
-LOG_PATH = "D:/LLM_Memory/memory_log.json"
-OUTPUT_PATH = "D:/LLM_Memory/rag_context.txt"
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from sentence_transformers import SentenceTransformer
+from sqlite_store import fetch_all_entries, insert_memory, init_db
+from modules.atomic.format_context import format_context
+import numpy as np
+from core.llm_runner import generate_response
+
+LOG_PATH = os.getenv("LOG_PATH", "./logs/memory_log.json")
+OUTPUT_PATH = os.getenv("OUTPUT_PATH", "./logs/rag_context.txt")
 MODEL_NAME = "all-MiniLM-L6-v2"
-LLAMA_MODEL_PATH = "C:/Users/Scrambles/llama.cpp/models/MythoMax-L2-13B.Q4_K_M.gguf"
+LLAMA_MODEL_PATH = os.getenv("LLM_MODEL_PATH", "./models/MythoMax-L2-13B.Q4_K_M.gguf")
 TOP_K = 5
 
+def cosine_search(embeddings, entries, query, model, top_k):
+    from numpy import dot
+    from numpy.linalg import norm
+
+    query_emb = model.encode([query])[0]
+
+    def cosine_sim(a, b):
+        return dot(a, b) / (norm(a) * norm(b))
+
+    scores = [(cosine_sim(query_emb, emb), e) for e, emb in zip(entries, embeddings)]
+    scores.sort(reverse=True, key=lambda x: x[0])
+    return [e for _, e in scores[:top_k]]
+
 def main():
-    print("[*] Loading symbolic memory...")
-    memory = load_memory(LOG_PATH)
-    if not memory:
-        print("[error] No entries found.")
+    init_db()
+
+    print("[*] Launch UI? (y/n): ", end="")
+    choice = input().strip().lower()
+    if choice == "y":
+        launcher_path = os.path.join(os.path.dirname(__file__), "launcher.py")
+        if os.path.exists(launcher_path):
+            print("[ui] Launching assistant UI...")
+            os.system(f'python "{launcher_path}"')
+            return
+        else:
+            print("[error] UI launcher not found. Proceeding with CLI...")
+
+    print("[*] Loading symbolic memory from SQLite...")
+    model = SentenceTransformer(MODEL_NAME)
+
+    entry_pairs = fetch_all_entries()
+    if not entry_pairs:
+        print("[error] No entries found in database.")
         return
 
-    model = SentenceTransformer(MODEL_NAME)
-    index, _ = build_index(model, memory)
+    entries, embeddings = zip(*entry_pairs)
 
     query = input("\n[?] Enter a symbolic query for reflection:\n> ").strip()
     print(f"\n[*] Searching memory for: \"{query}\"")
-    top_entries = search_memory(index, memory, query, model, TOP_K)
+    top_entries = cosine_search(embeddings, entries, query, model, TOP_K)
 
     if not top_entries:
         print("[error] No relevant memory entries found.")
@@ -38,9 +69,24 @@ def main():
 
     user_msg = input("\n[+] Enter customer message:\n> ").strip()
     print("\n[~] Generating response...\n")
-    reply = generate_response(top_block, user_msg, LLAMA_MODEL_PATH)
+    response = generate_response(top_block, user_msg, LLAMA_MODEL_PATH)
+
     print("[Response]:\n")
-    print(reply)
+    print(response)
+
+    new_entry = {
+        "Title": query[:60],
+        "Summary": response[:120],
+        "Reflective Prompt": query,
+        "Bias Tags": ["auto-logged"],
+        "Memory Type": "Auto-Reflection",
+        "Continuity Cue": "RAG-assisted",
+        "Reflection Status": "Reinforce",
+        "tone_context": {"before": "?", "after": "?"}
+    }
+    embedding = model.encode([response])[0]
+    insert_memory(new_entry, np.array(embedding))
+    print("\n[log] Response inserted into symbolic_memory.db.")
 
 if __name__ == "__main__":
     main()

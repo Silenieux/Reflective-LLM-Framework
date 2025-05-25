@@ -177,5 +177,32 @@
     "Memory Type": "Soft Guidance",
     "Continuity Cue": "New user friction",
     "Reflection Status": "Reinforce"
-  }
+  },
+	{
+  "Title": "Absurd Urgency Panic",
+  "Summary": "The tone of your message is urgent and slightly panicked.",
+  "Reflective Prompt": "absurdity",
+  "Bias Tags": [
+    "Absurd",
+    "Urgency",
+    "Panic"
+	],
+  "Memory Type": "Tone Classification",
+  "Continuity Cue": "Comedic urgency with situational panic",
+  "Reflection Status": "Reinforce"
+},
+{
+  "Title": "Absurd Escalation Avoidance",
+  "Summary": "The associate’s quick and empathetic response helped de-escalate the situation. They acknowledged urgency and subtly offered reassurance. Although absurd in nature, the situation was treated with consistent emotional care.",
+  "Reflective Prompt": "frantic employee hiding from manager",
+  "Bias Tags": [
+    "Absurd",
+    "Panic",
+    "Tone Recall",
+    "De-escalation"
+  ],
+  "Memory Type": "Tone Preservation",
+  "Continuity Cue": "Sudden tonal shift into absurdity",
+  "Reflection Status": "Reinforce"
+}
 ]
