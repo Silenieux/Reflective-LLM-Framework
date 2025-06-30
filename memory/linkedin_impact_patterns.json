@@ -1,0 +1,17 @@
+[
+  {
+    "impact_pattern": "burnout_breakthrough",
+    "structure": "emotional exhaustion > moment of clarity > action",
+    "example": "Burnout made me think I was broken. Turns out I just needed reflection. So I built it.",
+    "tone_anchor": {
+      "before": "overwhelmed",
+      "after": "centered"
+    },
+    "tag_suggestions": [
+      "burnout",
+      "AIethics",
+      "worklifebalance"
+    ],
+    "use_case": "symbolic reflection post"
+  }
+]

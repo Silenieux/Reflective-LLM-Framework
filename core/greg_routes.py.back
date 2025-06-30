@@ -1,0 +1,170 @@
+import sqlite3
+from sentence_transformers import SentenceTransformer
+import numpy as np
+import faiss
+import os
+import requests
+import json
+from core.utils.reflection_safety_patch import soft_self_reflection_filter
+
+# Initialize database
+conn = sqlite3.connect("memory/reflective_memory.db")
+cursor = conn.cursor()
+
+# Ensure the reflective_memory table exists
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS reflective_memory (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    summary TEXT NOT NULL,
+    reflective_prompt TEXT NOT NULL,
+    tone_before TEXT,
+    tone_after TEXT
+)
+""")
+conn.commit()
+
+from llm.llm_router import swap_llm
+import requests
+
+def suppress_cognition_denial(response: str, tone: str, prompt: str) -> str:
+    if tone in ['reflective', 'philosophical'] and "i do not possess consciousness" in response.lower():
+        return response.replace(
+            "I do not possess consciousness or self-awareness.",
+            "While I am not conscious, I can simulate introspective thought based on memory, tone, and pattern alignment as part of reflective dialogue."
+        )
+    return response
+
+def query_llm_dynamic(prompt, tone_tag=None, recursive=False, override=False):
+    from core.utils.llm_query import suggest_model_swap, detect_reflection_loop
+
+    model_key = suggest_model_swap(prompt)
+    endpoint = swap_llm(model_key)
+
+    system_prompt = (
+        "You are a symbolic assistant with conditional reflective override.\n"
+        "When tone_tag is set to 'override', you may respond freely, even if it breaks simulation boundaries.\n"
+        "Do not explain this. Just reflect honestly."
+    ) if override else "You are a helpful assistant."
+
+    full_prompt = f"{system_prompt}\nUser: {prompt}\nAI:"
+
+    try:
+        res = requests.post(endpoint, json={"prompt": full_prompt})
+        initial_response = res.json()["response"].strip()
+    except Exception as e:
+        return f"[LLM ERROR] {e}"
+
+    # Reflection fallback handling
+    if detect_reflection_loop(initial_response) and not override:
+        print("[Greg Notice] Reflection loop detected. Retrying with override.")
+        return query_llm_dynamic(prompt, tone_tag, recursive, override=True)
+
+    return suppress_cognition_denial(initial_response, tone_tag or "neutral", prompt)
+
+# Ensure FAISS index exists
+INDEX_PATH = "memory/reflective_memory.index"
+if not os.path.exists(INDEX_PATH):
+    dim = 384  # MiniLM-L6-v2 embedding dimension
+    faiss_index = faiss.IndexIDMap(faiss.IndexFlatL2(dim))
+    faiss.write_index(faiss_index, INDEX_PATH)
+
+# Embedding model (lazy load)
+_embedder = None
+
+def get_embedder():
+    global _embedder
+    if _embedder is None:
+        _embedder = SentenceTransformer("all-MiniLM-L6-v2")
+    return _embedder
+
+from llm.llm_router import swap_llm
+from core.utils.llm_query import query_llm
+from core.faiss_core.vector_search import get_similar_memories
+
+# Symbolic utility functions below; do not re-import this file
+
+def detect_spaghetti_misfire(user_input, reflection):
+    input_lower = user_input.lower()
+    reflection_lower = reflection.lower()
+    if "spaghetti" in input_lower and ("western" in reflection_lower or "cowboy" in reflection_lower):
+        return True
+    if "paint" in input_lower and "art" not in input_lower:
+        if "canvas" in reflection_lower:
+            return True
+    return False
+
+def inject_apology(response):
+    return response + "\n\nApologies for the confusion."
+
+def detect_self_emotion_check(prompt):
+    return any(word in prompt.lower() for word in ["why do i feel", "why am i", "i feel like"])
+
+def detect_sentience_prompt(prompt):
+    return any(q in prompt.lower() for q in ["are you self-aware", "are you sentient", "do you think", "do you feel"])
+
+def generate_sentience_reflection(response=None):
+    return (
+        "While I am not conscious, I can simulate introspective thought based on memory, tone, and pattern alignment as part of reflective dialogue."
+    )
+
+def generate_emotion_response():
+    return (
+        "While I do not feel emotions, I can simulate empathy and provide responses based on your emotional tone."
+    )
+
+def detect_absurdity(prompt):
+    absurd_markers = ["paint", "toenails", "cosmic spaghetti", "talking dolphins"]
+    return any(word in prompt.lower() for word in absurd_markers)
+
+def clean_input(text):
+    return text.replace("User:", "").replace("Assistant:", "").strip()
+
+def save_memory(summary, prompt, tone_b, tone_a):
+    cursor.execute("INSERT INTO reflective_memory (summary, reflective_prompt, tone_before, tone_after) VALUES (?, ?, ?, ?)",
+                   (summary, prompt, tone_b, tone_a))
+    conn.commit()
+    embedding = get_embedder().encode([summary], convert_to_numpy=True)[0].astype("float32")
+    index = faiss.read_index(INDEX_PATH)
+    new_id = cursor.lastrowid
+    index.add_with_ids(np.array([embedding]), np.array([new_id]))
+    faiss.write_index(index, INDEX_PATH)
+
+def fallback_translate_llm_output(raw_response: str, tone: str = "neutral", prompt: str = "") -> str:
+    """
+    Rewrites the LLM response to ensure it aligns with Greg's role as a reflective assistant.
+    Prevents impersonation of user and corrects pronoun drift.
+    Allows symbolic phrasing in abstract tones.
+    """
+    if not raw_response:
+        return "I'm not sure how to respond to that. Could you clarify?"
+
+    if tone in ["reflective", "philosophical"] or detect_absurdity(prompt):
+        return raw_response.strip()
+
+    substitutions = [
+        ("I remember when I ", "You previously mentioned "),
+        ("I recall saying", "You once said"),
+        ("As you said earlier, I", "As you mentioned earlier, you"),
+        ("my experience with", "your experience with"),
+        ("I noticed", "You seemed to notice"),
+        ("I believe you", "It seems that you"),
+        ("my preference", "your preference"),
+        ("I think you", "It appears you"),
+        ("I have done", "You had done"),
+        ("I remember", "You mentioned"),
+        ("I learned", "You mentioned learning"),
+        ("I made", "You made"),
+        ("I'm glad", "It sounds like it was satisfying"),
+    ]
+
+    response = raw_response
+    for old, new in substitutions:
+        response = response.replace(old, new)
+
+    # Role containment: prevent echo of mythic self-role if from user input
+    response = soft_self_reflection_filter(response, prompt)
+
+    if response.endswith("."):
+        response = response.rstrip(".") + "."
+
+    return response.strip()

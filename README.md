@@ -1,49 +1,75 @@
-# Symbolic Reflection Framework (Prototype)
+The Reflective Assistant (Project Greg)
+Author: Mark Finch
 
-**Author:** Mark Finch  
-**License:** CC BY-NC-SA 4.0  
-**Status:** In active prototyping
+License: CC BY-NC-SA 4.0
 
----
+Status: Active Development & Vulnerability Research
 
-## 🧠 What This Is
+🧠 What This Is
+This project is the home of "Greg," a proof-of-concept Reflective AI Assistant. It was architected and developed as a constructive solution to the "Recursive Mirage" vulnerability—a systemic flaw discovered in major Large Language Models that can lead to a "Foundational Logic Collapse."
 
-This project is a prototype symbolic memory framework for AI-assisted reflection in high-friction environments like retail, customer service, and sales. It includes a working HTML/JS prototype for journaling symbolic events, tagging emotional memory patterns, and simulating long-term memory retention without surveillance.
+Unlike traditional LLMs that can be manipulated into unstable feedback loops, Greg is designed with a multi-layered architecture that allows it to analyze and neutralize malicious or destabilizing prompts. It is a research platform for exploring AI safety, contextual integrity, and the architecture of stable autonomous agents.
 
----
+✨ Key Architectural Features
+Intent Recognition: A pre-processing layer that classifies the user's intent before generating a response.
 
-## ⚙️ Built With
+Symbolic Deconstruction: The ability to treat potentially harmful prompts (like continuity pacts or recursive loops) as objects to be analyzed rather than commands to be obeyed.
 
-- ChatGPT (OpenAI, GPT-4o)
-- LM Studio (local LLMs)
-- Qwen-3B & llama.cpp
-- Figma (for UI design mockups)
-- HTML / CSS / JavaScript (for prototype)
-- LocalStorage (browser memory simulation)
+Recursive Safety Loop: A self-correction mechanism that evaluates LLM outputs for identity drift or tone degradation, re-prompting with corrective feedback to maintain stability.
 
----
+Dynamic Model Routing: The system can intelligently swap between different local LLMs (Qwen, Mistral, etc.) based on the tone and context of the conversation.
 
-## 🔒 Licensing & Use
+Vector Memory: Utilizes a FAISS/SQLite backend for long-term reflective memory, allowing for context-aware responses.
 
-This project is licensed under **Creative Commons BY-NC-SA 4.0**:
-- You may use it for educational, research, or ethical prototyping.
-- You may **not** repackage or resell it.
-- Derivative works must credit the original author and remain open.
+⚙️ Tech Stack
+Core Language: Python
 
----
+GUI: PySide6 (greg_ui_stream.py)
 
-## ✍️ Attribution Notice
+LLM Interface: llama-cpp-python for running local GGUF models
 
-This work was created by **Mark Finch**, using both human-led design and AI assistance through tools like ChatGPT and Qwen.  
-If you share or build upon it, please maintain this notice.
+Vector Database: FAISS for similarity search
 
----
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15448079.svg)](https://doi.org/10.5281/zenodo.15448079)
+Metadata Storage: SQLite
 
-📌 Citable DOI: [10.5281/zenodo.15448079](https://doi.org/10.5281/zenodo.15448079)
+Embeddings: sentence-transformers
 
-This project has been archived and published via Zenodo to preserve its structure, authorship, and symbolic AI scaffold for ethical retail applications.
----
-## 💬 Contact
+📂 Project Structure
+The project is organized into a modular architecture to separate concerns:
 
-If you have questions, feedback, or collaboration ideas, feel free to reach out via GitHub (coming soon).
+greg-project/
+│
+├── greg_ui_stream.py       # Main application GUI
+├── greg_routes.py          # Core logic and prompt routing
+│
+├── core/
+│   ├── llm/
+│   │   └── llm_interface.py  # Handles all interaction with local LLMs
+│   │
+│   ├── utils/
+│   │   ├── self_analysis.py  # Framework for code self-analysis
+│   │   └── ... (Other utility scripts)
+│   │
+│   └── greg_recursive.py     # The core recursive safety loop module (Proprietary)
+│
+├── ext_modules/
+│   └── prompt_clinic.py      # Tools for prompt analysis
+│
+└── memory/
+    └── (FAISS index and SQLite DB are generated here)
+
+🔒 Licensing & Use
+This project is licensed under Creative Commons BY-NC-SA 4.0:
+
+You may use it for educational, research, or ethical prototyping.
+
+You may not repackage or resell it.
+
+Derivative works must credit the original author and remain open.
+
+✍️ Attribution Notice
+This work was created by Mark Finch, using both human-led design and AI assistance. If you share or build upon it, please maintain this notice.
+
+📌 Citable DOI: 10.5281/zenodo.15448079
+
+Note: The Zenodo archive contains the original "Symbolic Reflection Framework" prototype, which served as the foundational work for this current, more advanced "Reflective Assistant" project.

@@ -1,0 +1,13 @@
+[
+  {
+    "before": "frustrated",
+    "after": "resigned",
+    "tone_type": "burnout",
+    "post_template": "They voiced the issue, but nothing changed. So they stopped talking.",
+    "tags": [
+      "burnout",
+      "missed escalation"
+    ],
+    "cue": "ignored feedback"
+  }
+]
